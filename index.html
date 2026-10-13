@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>𝒫ilinehtar</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,500;0,700;1,400&display=swap">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#e9ece8;--panel:#f7f8f5;--ink:#1d2a33;--muted:#5f6d75;--line:#cdd4d0;--accent:#24506b;--on-accent:#fff;--field:#fff;--pin:#ffc83d;--pin-ink:#1d1a10}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12171a;--panel:#1b2227;--ink:#e6ecef;--muted:#92a1a9;--line:#2f3a41;--accent:#8cc0de;--on-accent:#0f1a20;--field:#141a1e}}
+:root[data-theme="dark"]{--bg:#12171a;--panel:#1b2227;--ink:#e6ecef;--muted:#92a1a9;--line:#2f3a41;--accent:#8cc0de;--on-accent:#0f1a20;--field:#141a1e}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif}
+.app{max-width:1180px;margin:0 auto;padding:22px 16px 48px;display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:22px;align-items:start}
+@media (max-width:880px){.app{grid-template-columns:1fr}}
+header{grid-column:1/-1}
+h1{font:500 34px/1.1 Newsreader,Georgia,serif;margin:0 0 4px}
+header p{margin:0;color:var(--muted);max-width:62ch}
+h2{font:700 19px/1.2 Newsreader,Georgia,serif;margin:0 0 10px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px}
+.side{display:grid;gap:16px}
+.drop{display:grid;place-items:center;text-align:center;gap:8px;min-height:360px;border:2px dashed var(--line);border-radius:10px;padding:24px;cursor:pointer;color:var(--muted)}
+.drop.over,.drop:hover{border-color:var(--accent);color:var(--ink)}
+.drop strong{font:500 24px/1.2 Newsreader,Georgia,serif;color:var(--ink)}
+.drop input{position:absolute;opacity:0;width:1px;height:1px}
+.drop:focus-within{outline:2px solid var(--accent);outline-offset:2px}
+.stagebox{display:flex;justify-content:center;background:repeating-conic-gradient(var(--line) 0 25%,transparent 0 50%) 0 0/16px 16px;border-radius:6px;padding:10px}
+#frame{position:relative;display:inline-block;max-width:100%;line-height:0}
+#photo{display:block;max-width:100%;max-height:76vh;border-radius:2px;user-select:none;-webkit-user-drag:none}
+#pins{position:absolute;inset:0;cursor:crosshair}
+.pin{position:absolute;transform:translate(-50%,-50%);touch-action:none;cursor:grab;line-height:1}
+.pin b{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--pin);color:var(--pin-ink);font:700 13px system-ui;border:2px solid #fff;box-shadow:0 1px 5px rgba(0,0,0,.5)}
+.pin.on b{outline:3px solid var(--accent);outline-offset:1px}
+.pin:focus-visible b{outline:3px solid var(--accent)}
+.lbl{position:absolute;top:100%;left:50%;transform:translateX(-50%);margin-top:3px;white-space:nowrap;background:rgba(15,12,8,.78);color:#fff;font:600 12px system-ui;line-height:1.3;padding:1px 7px;border-radius:9px;pointer-events:none}
+.bar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:10px;flex-wrap:wrap}
+.hint{color:var(--muted);font-size:13px;margin:0}
+figcaption{margin:12px 2px 0}
+#capT{font:700 24px/1.2 Newsreader,Georgia,serif}
+#capM{color:var(--muted)}
+label.f{display:grid;gap:4px;margin-bottom:11px;font-size:13px;color:var(--muted)}
+input[type=text],input[type=date],input[type=month],input[type=number],select,textarea{width:100%;font:16px/1.3 system-ui,sans-serif;color:var(--ink);background:var(--field);border:1px solid var(--line);border-radius:8px;padding:8px 10px}
+textarea{resize:vertical;min-height:60px}
+input:focus,select:focus,textarea:focus,button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.row{display:grid;grid-template-columns:140px 1fr;gap:8px}
+button{font:600 15px system-ui;border-radius:8px;border:1px solid var(--line);background:var(--field);color:var(--ink);padding:9px 14px;cursor:pointer}
+button.main{background:var(--accent);color:var(--on-accent);border-color:var(--accent);width:100%;padding:12px;font-size:16px}
+button:disabled{opacity:.45;cursor:not-allowed}
+ul{list-style:none;margin:0;padding:0;display:grid;gap:7px}
+li{display:grid;grid-template-columns:30px 1fr 32px;gap:7px;align-items:center;padding:3px;border-radius:9px}
+li.on{background:color-mix(in srgb,var(--pin) 28%,transparent)}
+.num{width:30px;height:30px;padding:0;border-radius:50%;background:var(--pin);color:var(--pin-ink);border:0;font-weight:700}
+.del{padding:0;height:32px;font-size:20px;line-height:1;color:var(--muted)}
+.chk{display:flex;gap:9px;align-items:flex-start;margin:0 0 10px;font-size:14px}
+.chk input{margin-top:3px}
+#out{margin-top:14px}
+#out img{width:100%;border-radius:6px;border:1px solid var(--line);display:block}
+#status{min-height:1.3em;margin:10px 0 0;font-size:13px;color:var(--muted)}
+</style>
+</head>
+<body>
+<main class="app">
+<header>
+  <h1>Légender une photo</h1>
+  <p>Ajoutez une photo, repérez chaque personne, renseignez le titre, la date et le lieu, puis exportez l’image annotée.</p>
+</header>
+
+<section class="card" aria-label="Photo">
+  <label class="drop" id="empty" for="file">
+    <strong>Déposez une photo ici</strong>
+    <span>ou touchez pour choisir un fichier (vous pouvez aussi la coller)</span>
+    <input id="file" type="file" accept="image/*">
+  </label>
+  <div id="stage" hidden>
+    <div class="stagebox"><div id="frame"><img id="photo" alt="Photo à annoter" draggable="false"><div id="pins"></div></div></div>
+    <figure style="margin:0"><figcaption><div id="capT"></div><div id="capM"></div></figcaption></figure>
+    <div class="bar">
+      <p class="hint">Touchez la photo pour placer un repère, puis saisissez le nom. Glissez un repère pour l’ajuster.</p>
+      <label class="btnlike"><button type="button" id="change">Changer de photo</button></label>
+    </div>
+  </div>
+</section>
+
+<aside class="side">
+  <section class="card">
+    <h2>Informations</h2>
+    <label class="f">Titre<input type="text" id="title" placeholder="Ex. Mariage de Paul et Anne" autocomplete="off"></label>
+    <label class="f">Date
+      <div class="row">
+        <select id="dtype" aria-label="Type de date">
+          <option value="exact">Date précise</option>
+          <option value="month">Mois et année</option>
+          <option value="year">Année</option>
+          <option value="circa">Vers (approx.)</option>
+          <option value="decade">Décennie</option>
+          <option value="free">Texte libre</option>
+        </select>
+        <input id="dval" type="date" aria-label="Valeur de la date">
+      </div>
+    </label>
+    <label class="f">Lieu<input type="text" id="place" placeholder="Ex. Nantes, jardin des Plantes" autocomplete="off"></label>
+    <label class="f">Occasion<input type="text" id="event" placeholder="Ex. Repas de famille" autocomplete="off"></label>
+    <label class="f">Notes<textarea id="notes" placeholder="Photographe, source, anecdote…"></textarea></label>
+  </section>
+
+  <section class="card">
+    <h2>Personnes (<span id="count">0</span>)</h2>
+    <p class="hint" id="noppl">Aucune personne repérée pour l’instant.</p>
+    <ul id="list"></ul>
+  </section>
+
+  <section class="card">
+    <h2>Export</h2>
+    <label class="chk"><input type="checkbox" id="optLbl" checked><span>Écrire les noms sur la photo</span></label>
+    <label class="chk"><input type="checkbox" id="optCap" checked><span>Ajouter un bandeau avec titre, date, lieu et liste des personnes</span></label>
+    <label class="f">Format
+      <select id="fmt"><option value="png">PNG (qualité maximale)</option><option value="jpg">JPEG (fichier plus léger)</option></select>
+    </label>
+    <button class="main" id="go" disabled>Exporter l’image</button>
+    <p id="status" role="status" aria-live="polite"></p>
+    <div id="out" hidden><img id="outImg" alt="Aperçu de l’export"></div>
+  </section>
+</aside>
+</main>
+
+<script>
+const $=s=>document.querySelector(s);
+const SERIF='Georgia,"Times New Roman",serif',SANS='system-ui,-apple-system,"Segoe UI",sans-serif';
+const S={img:null,url:null,people:[],sel:null,nid:1,base:'photo'};
+let DL=null,drag=null,outUrl=null;
+try{if(window.claude&&claude.use)claude.use('downloads').then(d=>{DL=d}).catch(()=>{})}catch(e){}
+
+const status=m=>{$('#status').textContent=m};
+const clamp=v=>Math.min(1,Math.max(0,v));
+const slug=s=>s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+
+/* ---------- Chargement ---------- */
+function loadFile(f){
+  if(!f||!f.type.startsWith('image/')){status('Ce fichier n’est pas une image.');return}
+  const url=URL.createObjectURL(f),im=new Image();
+  im.onload=()=>{
+    if(S.url)URL.revokeObjectURL(S.url);
+    const had=S.people.length;
+    S.url=url;S.img=im;S.people=[];S.sel=null;S.base=f.name.replace(/\.[^.]+$/,'')||'photo';
+    $('#photo').src=url;$('#empty').hidden=true;$('#stage').hidden=false;$('#go').disabled=false;
+    renderAll();
+    status(had?'Nouvelle photo : les repères ont été réinitialisés.':'Touchez la photo pour placer un repère sur chaque personne.');
+  };
+  im.onerror=()=>{URL.revokeObjectURL(url);status('Impossible de lire cette image. Essayez un fichier JPEG ou PNG.')};
+  im.src=url;
+}
+$('#file').onchange=e=>{loadFile(e.target.files[0]);e.target.value=''};
+$('#change').onclick=()=>$('#file').click();
+const dz=$('#empty');
+['dragenter','dragover'].forEach(t=>dz.addEventListener(t,e=>{e.preventDefault();dz.classList.add('over')}));
+['dragleave','drop'].forEach(t=>dz.addEventListener(t,e=>{e.preventDefault();dz.classList.remove('over')}));
+dz.addEventListener('drop',e=>loadFile(e.dataTransfer.files[0]));
+window.addEventListener('dragover',e=>e.preventDefault());
+window.addEventListener('drop',e=>{e.preventDefault();if(e.dataTransfer.files[0])loadFile(e.dataTransfer.files[0])});
+window.addEventListener('paste',e=>{const f=[...(e.clipboardData?.files||[])][0];if(f)loadFile(f)});
+
+/* ---------- Repères ---------- */
+function addPerson(x,y){const p={id:S.nid++,x,y,name:''};S.people.push(p);S.sel=p.id;renderAll(p.id)}
+function select(id){
+  S.sel=id;
+  document.querySelectorAll('.pin').forEach(d=>d.classList.toggle('on',+d.dataset.id===id));
+  document.querySelectorAll('#list li').forEach(li=>li.classList.toggle('on',+li.dataset.id===id));
+}
+function renderAll(focusId){renderPins();renderList(focusId)}
+function renderPins(){
+  const box=$('#pins'),lbl=$('#optLbl').checked;box.innerHTML='';
+  S.people.forEach((p,i)=>{
+    const d=document.createElement('div');
+    d.className='pin'+(p.id===S.sel?' on':'');d.dataset.id=p.id;
+    d.style.left=p.x*100+'%';d.style.top=p.y*100+'%';
+    d.tabIndex=0;d.setAttribute('role','button');d.setAttribute('aria-label','Personne '+(i+1));
+    const b=document.createElement('b');b.textContent=i+1;
+    const l=document.createElement('span');l.className='lbl';l.textContent=p.name;l.hidden=!(lbl&&p.name.trim());
+    d.append(b,l);box.append(d);
+  });
+}
+function renderList(focusId){
+  const ul=$('#list');ul.innerHTML='';
+  S.people.forEach((p,i)=>{
+    const li=document.createElement('li');li.dataset.id=p.id;if(p.id===S.sel)li.className='on';
+    const n=document.createElement('button');n.type='button';n.className='num';n.textContent=i+1;n.setAttribute('aria-label','Sélectionner la personne '+(i+1));n.onclick=()=>select(p.id);
+    const inp=document.createElement('input');inp.type='text';inp.value=p.name;inp.placeholder='Nom (ou ?)';inp.autocomplete='off';inp.setAttribute('aria-label','Nom de la personne '+(i+1));
+    inp.onfocus=()=>select(p.id);
+    inp.oninput=()=>{p.name=inp.value;const l=document.querySelector('.pin[data-id="'+p.id+'"] .lbl');if(l){l.textContent=p.name;l.hidden=!($('#optLbl').checked&&p.name.trim())}};
+    inp.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();inp.blur()}};
+    const del=document.createElement('button');del.type='button';del.className='del';del.textContent='×';del.setAttribute('aria-label','Supprimer la personne '+(i+1));
+    del.onclick=()=>{S.people=S.people.filter(q=>q.id!==p.id);if(S.sel===p.id)S.sel=null;renderAll()};
+    li.append(n,inp,del);ul.append(li);
+    if(p.id===focusId)setTimeout(()=>inp.focus(),0);
+  });
+  $('#count').textContent=S.people.length;
+  $('#noppl').hidden=S.people.length>0;
+}
+const pins=$('#pins');
+pins.addEventListener('click',e=>{
+  if(e.target!==pins)return;
+  const r=pins.getBoundingClientRect();
+  addPerson(clamp((e.clientX-r.left)/r.width),clamp((e.clientY-r.top)/r.height));
+});
+pins.addEventListener('pointerdown',e=>{
+  const d=e.target.closest('.pin');if(!d)return;
+  e.preventDefault();const id=+d.dataset.id;select(id);
+  drag={id,d};d.setPointerCapture(e.pointerId);
+});
+pins.addEventListener('pointermove',e=>{
+  if(!drag)return;
+  const r=pins.getBoundingClientRect(),p=S.people.find(q=>q.id===drag.id);if(!p)return;
+  p.x=clamp((e.clientX-r.left)/r.width);p.y=clamp((e.clientY-r.top)/r.height);
+  drag.d.style.left=p.x*100+'%';drag.d.style.top=p.y*100+'%';
+});
+['pointerup','pointercancel'].forEach(t=>pins.addEventListener(t,()=>{drag=null}));
+pins.addEventListener('keydown',e=>{
+  const d=e.target.closest('.pin');if(!d)return;
+  const p=S.people.find(q=>q.id===+d.dataset.id),s=.01,m={ArrowLeft:[-s,0],ArrowRight:[s,0],ArrowUp:[0,-s],ArrowDown:[0,s]}[e.key];
+  if(!m||!p)return;e.preventDefault();
+  p.x=clamp(p.x+m[0]);p.y=clamp(p.y+m[1]);d.style.left=p.x*100+'%';d.style.top=p.y*100+'%';
+});
+$('#optLbl').onchange=renderPins;
+
+/* ---------- Infos ---------- */
+const DT={exact:['date',''],month:['month',''],year:['number','1985'],circa:['number','1985'],decade:['number','1980'],free:['text','Ex. été 1962']};
+$('#dtype').onchange=()=>{
+  const t=$('#dtype').value,v=$('#dval');v.value='';v.type=DT[t][0];v.placeholder=DT[t][1];
+  if(v.type==='number'){v.min=1500;v.max=2100;v.step=t==='decade'?10:1}
+  updateCap();
+};
+function dateText(){
+  const t=$('#dtype').value,v=$('#dval').value.trim();if(!v)return'';
+  if(t==='exact'){const d=new Date(v+'T12:00');return isNaN(d)?'':d.toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'})}
+  if(t==='month'){const d=new Date(v+'-01T12:00');return isNaN(d)?'':d.toLocaleDateString('fr-FR',{month:'long',year:'numeric'})}
+  if(t==='circa')return'vers '+v;
+  if(t==='decade')return'années '+v;
+  return v;
+}
+const val=id=>$('#'+id).value.trim();
+function metaText(){return[dateText(),val('place')].filter(Boolean).join(', ')}
+function updateCap(){$('#capT').textContent=val('title');$('#capM').textContent=[metaText(),val('event')].filter(Boolean).join(' – ')}
+['title','dtype','dval','place','event'].forEach(id=>{$('#'+id).addEventListener('input',updateCap);$('#'+id).addEventListener('change',updateCap)});
+
+/* ---------- Export ---------- */
+function wrap(ctx,t,mw){
+  const out=[];
+  t.split('\n').forEach(par=>{let line='';par.split(/\s+/).filter(Boolean).forEach(w=>{const x=line?line+' '+w:w;if(ctx.measureText(x).width>mw&&line){out.push(line);line=w}else line=x});out.push(line)});
+  return out;
+}
+function ell(ctx,t,mw){if(ctx.measureText(t).width<=mw)return t;while(t.length>1&&ctx.measureText(t+'…').width>mw)t=t.slice(0,-1);return t+'…'}
+function caption(ctx,W,k,y0,dry){
+  const pad=40*k,mw=W-2*pad;let y=y0+pad;ctx.textBaseline='top';ctx.textAlign='left';
+  const line=(txt,font,color,lh)=>{ctx.font=font;ctx.fillStyle=color;wrap(ctx,txt,mw).forEach(l=>{if(!dry)ctx.fillText(l,pad,y);y+=lh})};
+  const title=val('title'),meta=metaText(),ev=val('event'),notes=val('notes'),ppl=S.people;
+  if(title){line(title,'700 '+36*k+'px '+SERIF,'#1d2a33',44*k);y+=4*k}
+  if(meta)line(meta,'600 '+21*k+'px '+SANS,'#24506b',30*k);
+  if(ev)line(ev,'italic '+21*k+'px '+SERIF,'#4d5b63',30*k);
+  if(notes){y+=8*k;line(notes,19*k+'px '+SANS,'#3a464d',27*k)}
+  if(ppl.length){
+    if(y>y0+pad)y+=20*k;
+    if(!dry){ctx.fillStyle='#c9d0cc';ctx.fillRect(pad,y,mw,Math.max(1,k))}
+    y+=16*k;
+    line('Personnes sur la photo','700 '+20*k+'px '+SERIF,'#1d2a33',32*k);y+=4*k;
+    const cols=Math.max(1,Math.min(3,Math.floor(mw/(280*k)))),rows=Math.ceil(ppl.length/cols),cw=mw/cols;
+    for(let r=0;r<rows;r++)for(let c=0;c<cols;c++){
+      const i=c*rows+r;if(i>=ppl.length)continue;
+      const x=pad+c*cw,cy=y+r*36*k+15*k;
+      if(!dry){
+        ctx.fillStyle='#ffc83d';ctx.beginPath();ctx.arc(x+12*k,cy,12*k,0,7);ctx.fill();
+        ctx.fillStyle='#1d1a10';ctx.font='700 '+14*k+'px '+SANS;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(String(i+1),x+12*k,cy+k*.5);
+        ctx.textAlign='left';ctx.textBaseline='top';ctx.font=20*k+'px '+SANS;ctx.fillStyle='#1d2a33';
+        ctx.fillText(ell(ctx,ppl[i].name.trim()||'?',cw-48*k),x+32*k,cy-12*k);
+      }
+    }
+    y+=rows*36*k;
+  }
+  return y+pad-y0;
+}
+function rr(ctx,x,y,w,h,r){ctx.beginPath();if(ctx.roundRect)ctx.roundRect(x,y,w,h,r);else ctx.rect(x,y,w,h)}
+function render(){
+  const im=S.img,sc=Math.min(1,4000/Math.max(im.naturalWidth,im.naturalHeight));
+  const W=Math.round(im.naturalWidth*sc),H=Math.round(im.naturalHeight*sc);
+  const pk=W/($('#photo').clientWidth||W),k=Math.max(W,800)/900;
+  const showLbl=$('#optLbl').checked;
+  const has=$('#optCap').checked&&(val('title')||metaText()||val('event')||val('notes')||S.people.length);
+  const cv=document.createElement('canvas'),ctx=cv.getContext('2d');
+  let capH=0;
+  if(has){cv.width=W;cv.height=10;capH=Math.ceil(caption(ctx,W,k,0,true))}
+  cv.width=W;cv.height=H+capH;
+  ctx.drawImage(im,0,0,W,H);
+  S.people.forEach((p,i)=>{
+    const x=p.x*W,y=p.y*H,r=13*pk;
+    ctx.beginPath();ctx.arc(x,y,r-pk,0,7);ctx.fillStyle='#ffc83d';ctx.fill();
+    ctx.lineWidth=2*pk;ctx.strokeStyle='#fff';ctx.stroke();
+    ctx.fillStyle='#1d1a10';ctx.font='700 '+13*pk+'px '+SANS;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(String(i+1),x,y+pk*.5);
+    const t=p.name.trim();
+    if(showLbl&&t){
+      const f=12*pk;ctx.font='600 '+f+'px '+SANS;
+      const w=ctx.measureText(t).width+14*pk,h=f+5*pk;
+      const bx=Math.min(Math.max(x-w/2,2),W-w-2),by=Math.min(y+r+3*pk,H-h-2);
+      ctx.fillStyle='rgba(15,12,8,.78)';rr(ctx,bx,by,w,h,h/2);ctx.fill();
+      ctx.fillStyle='#fff';ctx.fillText(t,bx+w/2,by+h/2+pk*.5);
+    }
+  });
+  if(has){ctx.fillStyle='#f4f5f1';ctx.fillRect(0,H,W,capH);caption(ctx,W,k,H,false)}
+  return cv;
+}
+async function exportImg(){
+  if(!S.img)return;
+  const jpg=$('#fmt').value==='jpg';
+  status('Préparation de l’image…');
+  let blob;
+  try{blob=await new Promise(r=>render().toBlob(r,jpg?'image/jpeg':'image/png',.92))}catch(e){blob=null}
+  if(!blob){status('Export impossible : la photo est peut-être trop grande. Essayez le format JPEG.');return}
+  if(outUrl)URL.revokeObjectURL(outUrl);
+  outUrl=URL.createObjectURL(blob);$('#outImg').src=outUrl;$('#out').hidden=false;
+  const file=(slug(val('title'))||slug(S.base)||'photo')+'-annotee.'+(jpg?'jpg':'png');
+  if(DL){
+    try{await DL.save({filename:file,data:blob});status('Image enregistrée : '+file);return}
+    catch(e){if(e&&e.code==='declined'){status('Enregistrement annulé. L’aperçu reste disponible ci-dessous.');return}}
+  }
+  status('Enregistrement direct indisponible ici : maintenez le doigt (ou clic droit) sur l’aperçu ci-dessous pour l’enregistrer.');
+}
+$('#go').onclick=exportImg;
+</script>
+</body>
+</html>
