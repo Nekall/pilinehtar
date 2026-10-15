@@ -3,72 +3,83 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>𝒫ilinehtar</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,500;0,700;1,400&display=swap">
+<title>Légender une photo</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;700;800&display=swap">
 <style>
 :root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
---bg:#e9ece8;--panel:#f7f8f5;--ink:#1d2a33;--muted:#5f6d75;--line:#cdd4d0;--accent:#24506b;--on-accent:#fff;--field:#fff;--pin:#ffc83d;--pin-ink:#1d1a10}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12171a;--panel:#1b2227;--ink:#e6ecef;--muted:#92a1a9;--line:#2f3a41;--accent:#8cc0de;--on-accent:#0f1a20;--field:#141a1e}}
-:root[data-theme="dark"]{--bg:#12171a;--panel:#1b2227;--ink:#e6ecef;--muted:#92a1a9;--line:#2f3a41;--accent:#8cc0de;--on-accent:#0f1a20;--field:#141a1e}
+--bg:#fffdf6;--paper:#fff;--ink:#040400;--sh:#040400;--yellow:#ffd23f;--pink:#ffb8d4;--blue:#b9ccff;--orange:#ff5a1f;--link:#2c4bff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e0e0a;--paper:#1a1a14;--ink:#faf6e8;--sh:#faf6e8}}
+:root[data-theme="dark"]{--bg:#0e0e0a;--paper:#1a1a14;--ink:#faf6e8;--sh:#faf6e8}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 *{box-sizing:border-box}
 [hidden]{display:none!important}
-body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif}
-.app{max-width:1180px;margin:0 auto;padding:22px 16px 48px;display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:22px;align-items:start}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 15px/1.45 "Bricolage Grotesque",system-ui,-apple-system,"Segoe UI",sans-serif}
+.top{background:#040400;color:#faf6e8;text-align:center;font-weight:700;font-size:13px;padding:7px 12px}
+.stripes{height:14px;background:repeating-linear-gradient(-45deg,var(--orange) 0 10px,#040400 10px 20px);border-bottom:2px solid #040400}
+.app{max-width:1180px;margin:0 auto;padding:26px 16px 56px;display:grid;grid-template-columns:minmax(0,1fr) 370px;gap:26px;align-items:start}
 @media (max-width:880px){.app{grid-template-columns:1fr}}
 header{grid-column:1/-1}
-h1{font:500 34px/1.1 Newsreader,Georgia,serif;margin:0 0 4px}
-header p{margin:0;color:var(--muted);max-width:62ch}
-h2{font:700 19px/1.2 Newsreader,Georgia,serif;margin:0 0 10px}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px}
-.side{display:grid;gap:16px}
-.drop{display:grid;place-items:center;text-align:center;gap:8px;min-height:360px;border:2px dashed var(--line);border-radius:10px;padding:24px;cursor:pointer;color:var(--muted)}
-.drop.over,.drop:hover{border-color:var(--accent);color:var(--ink)}
-.drop strong{font:500 24px/1.2 Newsreader,Georgia,serif;color:var(--ink)}
+h1{font:800 clamp(36px,6.5vw,60px)/1 "Bricolage Grotesque",system-ui,sans-serif;letter-spacing:-.025em;margin:0 0 10px}
+header p{margin:0;max-width:56ch;font-size:17px}
+h2{font:800 23px/1.1 "Bricolage Grotesque",system-ui,sans-serif;letter-spacing:-.01em;margin:0 0 12px}
+.card{--bc:#040400;border:2px solid var(--bc);border-radius:18px;padding:18px;box-shadow:6px 6px 0 var(--sh);color:#040400}
+.paper{--bc:var(--ink);background:var(--paper);color:var(--ink);--bsh:var(--ink)}
+.c-pink{background:var(--pink)}.c-blue{background:var(--blue)}.c-yellow{background:var(--yellow)}
+.side{display:grid;gap:22px}
+.hint{margin:0;font-size:13px;opacity:.78}
+.drop{display:grid;place-items:center;text-align:center;gap:8px;min-height:380px;border:2.5px dashed var(--ink);border-radius:12px;padding:24px;cursor:pointer}
+.drop:hover,.drop.over{background:var(--yellow);color:#040400;border-style:solid}
+.drop strong{font:800 clamp(26px,4vw,36px)/1.05 "Bricolage Grotesque",system-ui,sans-serif;letter-spacing:-.02em}
 .drop input{position:absolute;opacity:0;width:1px;height:1px}
-.drop:focus-within{outline:2px solid var(--accent);outline-offset:2px}
-.stagebox{display:flex;justify-content:center;background:repeating-conic-gradient(var(--line) 0 25%,transparent 0 50%) 0 0/16px 16px;border-radius:6px;padding:10px}
+.drop:focus-within{outline:3px solid var(--link);outline-offset:3px}
+.stagebox{display:flex;justify-content:center;background:radial-gradient(circle,rgba(128,128,120,.4) 1.2px,transparent 1.7px) 0 0/14px 14px;border:2px solid var(--ink);border-radius:12px;padding:12px}
 #frame{position:relative;display:inline-block;max-width:100%;line-height:0}
-#photo{display:block;max-width:100%;max-height:76vh;border-radius:2px;user-select:none;-webkit-user-drag:none}
+#photo{display:block;max-width:100%;max-height:76vh;border:2px solid #040400;user-select:none;-webkit-user-drag:none;background:#fff}
 #pins{position:absolute;inset:0;cursor:crosshair}
 .pin{position:absolute;transform:translate(-50%,-50%);touch-action:none;cursor:grab;line-height:1}
-.pin b{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--pin);color:var(--pin-ink);font:700 13px system-ui;border:2px solid #fff;box-shadow:0 1px 5px rgba(0,0,0,.5)}
-.pin.on b{outline:3px solid var(--accent);outline-offset:1px}
-.pin:focus-visible b{outline:3px solid var(--accent)}
-.lbl{position:absolute;top:100%;left:50%;transform:translateX(-50%);margin-top:3px;white-space:nowrap;background:rgba(15,12,8,.78);color:#fff;font:600 12px system-ui;line-height:1.3;padding:1px 7px;border-radius:9px;pointer-events:none}
-.bar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:10px;flex-wrap:wrap}
-.hint{color:var(--muted);font-size:13px;margin:0}
-figcaption{margin:12px 2px 0}
-#capT{font:700 24px/1.2 Newsreader,Georgia,serif}
-#capM{color:var(--muted)}
-label.f{display:grid;gap:4px;margin-bottom:11px;font-size:13px;color:var(--muted)}
-input[type=text],input[type=date],input[type=month],input[type=number],select,textarea{width:100%;font:16px/1.3 system-ui,sans-serif;color:var(--ink);background:var(--field);border:1px solid var(--line);border-radius:8px;padding:8px 10px}
-textarea{resize:vertical;min-height:60px}
-input:focus,select:focus,textarea:focus,button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.pin b{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--yellow);color:#040400;font:800 13px "Bricolage Grotesque",system-ui;border:2px solid #040400;box-shadow:2px 2px 0 rgba(4,4,0,.55)}
+.pin.on b{outline:3px solid var(--link);outline-offset:1px}
+.pin:focus-visible b{outline:3px solid var(--link);outline-offset:1px}
+.lbl{position:absolute;top:100%;left:50%;transform:translateX(-50%);margin-top:4px;white-space:nowrap;background:#fff;color:#040400;font:700 12px "Bricolage Grotesque",system-ui;line-height:1.25;padding:1px 8px;border:1.5px solid #040400;border-radius:999px;pointer-events:none}
+.bar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:14px;flex-wrap:wrap}
+figure{margin:0}
+figcaption{margin:14px 2px 0}
+#capT{font:800 28px/1.1 "Bricolage Grotesque",system-ui,sans-serif;letter-spacing:-.015em}
+#capM{font-weight:600}
+label.f{display:grid;gap:5px;margin-bottom:12px;font-size:13px;font-weight:700}
+input[type=text],input[type=date],input[type=month],input[type=number],select,textarea{width:100%;font:500 16px/1.3 "Bricolage Grotesque",system-ui,sans-serif;color:#040400;background:#fff;border:2px solid #040400;border-radius:10px;padding:8px 11px}
+textarea{resize:vertical;min-height:62px}
+input:focus,select:focus,textarea:focus,button:focus-visible{outline:3px solid var(--link);outline-offset:2px}
 .row{display:grid;grid-template-columns:140px 1fr;gap:8px}
-button{font:600 15px system-ui;border-radius:8px;border:1px solid var(--line);background:var(--field);color:var(--ink);padding:9px 14px;cursor:pointer}
-button.main{background:var(--accent);color:var(--on-accent);border-color:var(--accent);width:100%;padding:12px;font-size:16px}
-button:disabled{opacity:.45;cursor:not-allowed}
-ul{list-style:none;margin:0;padding:0;display:grid;gap:7px}
-li{display:grid;grid-template-columns:30px 1fr 32px;gap:7px;align-items:center;padding:3px;border-radius:9px}
-li.on{background:color-mix(in srgb,var(--pin) 28%,transparent)}
-.num{width:30px;height:30px;padding:0;border-radius:50%;background:var(--pin);color:var(--pin-ink);border:0;font-weight:700}
-.del{padding:0;height:32px;font-size:20px;line-height:1;color:var(--muted)}
-.chk{display:flex;gap:9px;align-items:flex-start;margin:0 0 10px;font-size:14px}
-.chk input{margin-top:3px}
-#out{margin-top:14px}
-#out img{width:100%;border-radius:6px;border:1px solid var(--line);display:block}
-#status{min-height:1.3em;margin:10px 0 0;font-size:13px;color:var(--muted)}
+button{font:700 15px "Bricolage Grotesque",system-ui,sans-serif;border:2px solid #040400;border-radius:999px;background:#fff;color:#040400;padding:8px 18px;cursor:pointer;box-shadow:3px 3px 0 var(--bsh,#040400);transition:transform .08s,box-shadow .08s}
+button:hover:not(:disabled){transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--bsh,#040400)}
+button:active:not(:disabled){transform:translate(2px,2px);box-shadow:1px 1px 0 var(--bsh,#040400)}
+button.main{background:var(--orange);width:100%;padding:14px;font-size:18px;--bsh:#040400}
+button:disabled{opacity:.5;cursor:not-allowed;box-shadow:none}
+ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+li{display:grid;grid-template-columns:32px 1fr 34px;gap:8px;align-items:center;padding:4px;border-radius:12px}
+li.on{background:#fff}
+.num,.del{padding:0;box-shadow:none!important;transform:none!important}
+.num{width:32px;height:32px;border-radius:50%;background:var(--yellow);font-weight:800}
+.del{width:34px;height:34px;font-size:20px;line-height:1;background:transparent;border-color:transparent}
+.del:hover{background:#fff;border-color:#040400}
+.chk{display:flex;gap:10px;align-items:flex-start;margin:0 0 12px;font-size:14px;font-weight:600}
+.chk input{margin-top:3px;width:18px;height:18px;accent-color:#040400;flex:none}
+#out{margin-top:16px}
+#out img{width:100%;border:2px solid #040400;border-radius:10px;display:block;background:#fff}
+#status{min-height:1.3em;margin:12px 0 0;font-size:13px;font-weight:600}
 </style>
 </head>
 <body>
+<div class="top">Vos souvenirs méritent une vraie légende.</div>
+<div class="stripes"></div>
 <main class="app">
 <header>
-  <h1>Légender une photo</h1>
-  <p>Ajoutez une photo, repérez chaque personne, renseignez le titre, la date et le lieu, puis exportez l’image annotée.</p>
+  <h1>Pilinehtar</h1>
+  <p>Repérez chaque personne, ajoutez le titre, la date et le lieu, puis exportez l’image annotée.</p>
 </header>
 
-<section class="card" aria-label="Photo">
+<section class="card paper" aria-label="Photo">
   <label class="drop" id="empty" for="file">
     <strong>Déposez une photo ici</strong>
     <span>ou touchez pour choisir un fichier (vous pouvez aussi la coller)</span>
@@ -76,17 +87,17 @@ li.on{background:color-mix(in srgb,var(--pin) 28%,transparent)}
   </label>
   <div id="stage" hidden>
     <div class="stagebox"><div id="frame"><img id="photo" alt="Photo à annoter" draggable="false"><div id="pins"></div></div></div>
-    <figure style="margin:0"><figcaption><div id="capT"></div><div id="capM"></div></figcaption></figure>
+    <figure><figcaption><div id="capT"></div><div id="capM"></div></figcaption></figure>
     <div class="bar">
       <p class="hint">Touchez la photo pour placer un repère, puis saisissez le nom. Glissez un repère pour l’ajuster.</p>
-      <label class="btnlike"><button type="button" id="change">Changer de photo</button></label>
+      <button type="button" id="change">Changer de photo</button>
     </div>
   </div>
 </section>
 
 <aside class="side">
-  <section class="card">
-    <h2>Informations</h2>
+  <section class="card c-pink">
+    <h2>Les infos</h2>
     <label class="f">Titre<input type="text" id="title" placeholder="Ex. Mariage de Paul et Anne" autocomplete="off"></label>
     <label class="f">Date
       <div class="row">
@@ -106,14 +117,14 @@ li.on{background:color-mix(in srgb,var(--pin) 28%,transparent)}
     <label class="f">Notes<textarea id="notes" placeholder="Photographe, source, anecdote…"></textarea></label>
   </section>
 
-  <section class="card">
-    <h2>Personnes (<span id="count">0</span>)</h2>
-    <p class="hint" id="noppl">Aucune personne repérée pour l’instant.</p>
+  <section class="card c-blue">
+    <h2>Les personnes (<span id="count">0</span>)</h2>
+    <p class="hint" id="noppl">Personne n’est repéré pour l’instant.</p>
     <ul id="list"></ul>
   </section>
 
-  <section class="card">
-    <h2>Export</h2>
+  <section class="card c-yellow">
+    <h2>L’export</h2>
     <label class="chk"><input type="checkbox" id="optLbl" checked><span>Écrire les noms sur la photo</span></label>
     <label class="chk"><input type="checkbox" id="optCap" checked><span>Ajouter un bandeau avec titre, date, lieu et liste des personnes</span></label>
     <label class="f">Format
@@ -128,7 +139,7 @@ li.on{background:color-mix(in srgb,var(--pin) 28%,transparent)}
 
 <script>
 const $=s=>document.querySelector(s);
-const SERIF='Georgia,"Times New Roman",serif',SANS='system-ui,-apple-system,"Segoe UI",sans-serif';
+const FONT='"Bricolage Grotesque",system-ui,-apple-system,"Segoe UI",sans-serif';
 const S={img:null,url:null,people:[],sel:null,nid:1,base:'photo'};
 let DL=null,drag=null,outUrl=null;
 try{if(window.claude&&claude.use)claude.use('downloads').then(d=>{DL=d}).catch(()=>{})}catch(e){}
@@ -246,6 +257,7 @@ function updateCap(){$('#capT').textContent=val('title');$('#capM').textContent=
 ['title','dtype','dval','place','event'].forEach(id=>{$('#'+id).addEventListener('input',updateCap);$('#'+id).addEventListener('change',updateCap)});
 
 /* ---------- Export ---------- */
+const INK='#040400',YEL='#ffd23f',ORA='#ff5a1f',BLU='#2c4bff';
 function wrap(ctx,t,mw){
   const out=[];
   t.split('\n').forEach(par=>{let line='';par.split(/\s+/).filter(Boolean).forEach(w=>{const x=line?line+' '+w:w;if(ctx.measureText(x).width>mw&&line){out.push(line);line=w}else line=x});out.push(line)});
@@ -256,27 +268,27 @@ function caption(ctx,W,k,y0,dry){
   const pad=40*k,mw=W-2*pad;let y=y0+pad;ctx.textBaseline='top';ctx.textAlign='left';
   const line=(txt,font,color,lh)=>{ctx.font=font;ctx.fillStyle=color;wrap(ctx,txt,mw).forEach(l=>{if(!dry)ctx.fillText(l,pad,y);y+=lh})};
   const title=val('title'),meta=metaText(),ev=val('event'),notes=val('notes'),ppl=S.people;
-  if(title){line(title,'700 '+36*k+'px '+SERIF,'#1d2a33',44*k);y+=4*k}
-  if(meta)line(meta,'600 '+21*k+'px '+SANS,'#24506b',30*k);
-  if(ev)line(ev,'italic '+21*k+'px '+SERIF,'#4d5b63',30*k);
-  if(notes){y+=8*k;line(notes,19*k+'px '+SANS,'#3a464d',27*k)}
+  if(title){line(title,'800 '+40*k+'px '+FONT,INK,46*k);y+=4*k}
+  if(meta)line(meta,'700 '+23*k+'px '+FONT,BLU,32*k);
+  if(ev)line(ev,'italic 400 '+21*k+'px '+FONT,'#4a4a40',30*k);
+  if(notes){y+=8*k;line(notes,'400 '+19*k+'px '+FONT,'#2a2a22',27*k)}
   if(ppl.length){
     if(y>y0+pad)y+=20*k;
-    if(!dry){ctx.fillStyle='#c9d0cc';ctx.fillRect(pad,y,mw,Math.max(1,k))}
-    y+=16*k;
-    line('Personnes sur la photo','700 '+20*k+'px '+SERIF,'#1d2a33',32*k);y+=4*k;
+    if(!dry){ctx.fillStyle=INK;ctx.fillRect(pad,y,mw,Math.max(2,2*k))}
+    y+=18*k;
+    line('Qui est sur la photo ?','800 '+24*k+'px '+FONT,INK,34*k);y+=6*k;
     const cols=Math.max(1,Math.min(3,Math.floor(mw/(280*k)))),rows=Math.ceil(ppl.length/cols),cw=mw/cols;
     for(let r=0;r<rows;r++)for(let c=0;c<cols;c++){
       const i=c*rows+r;if(i>=ppl.length)continue;
-      const x=pad+c*cw,cy=y+r*36*k+15*k;
+      const x=pad+c*cw,cy=y+r*38*k+15*k;
       if(!dry){
-        ctx.fillStyle='#ffc83d';ctx.beginPath();ctx.arc(x+12*k,cy,12*k,0,7);ctx.fill();
-        ctx.fillStyle='#1d1a10';ctx.font='700 '+14*k+'px '+SANS;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(String(i+1),x+12*k,cy+k*.5);
-        ctx.textAlign='left';ctx.textBaseline='top';ctx.font=20*k+'px '+SANS;ctx.fillStyle='#1d2a33';
-        ctx.fillText(ell(ctx,ppl[i].name.trim()||'?',cw-48*k),x+32*k,cy-12*k);
+        ctx.beginPath();ctx.arc(x+13*k,cy,12*k,0,7);ctx.fillStyle=YEL;ctx.fill();ctx.lineWidth=2*k;ctx.strokeStyle=INK;ctx.stroke();
+        ctx.fillStyle=INK;ctx.font='800 14px '+FONT;ctx.font='800 '+14*k+'px '+FONT;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(String(i+1),x+13*k,cy+k*.5);
+        ctx.textAlign='left';ctx.textBaseline='top';ctx.font='600 '+21*k+'px '+FONT;
+        ctx.fillText(ell(ctx,ppl[i].name.trim()||'?',cw-50*k),x+34*k,cy-13*k);
       }
     }
-    y+=rows*36*k;
+    y+=rows*38*k;
   }
   return y+pad-y0;
 }
@@ -284,35 +296,44 @@ function rr(ctx,x,y,w,h,r){ctx.beginPath();if(ctx.roundRect)ctx.roundRect(x,y,w,
 function render(){
   const im=S.img,sc=Math.min(1,4000/Math.max(im.naturalWidth,im.naturalHeight));
   const W=Math.round(im.naturalWidth*sc),H=Math.round(im.naturalHeight*sc);
-  const pk=W/($('#photo').clientWidth||W),k=Math.max(W,800)/900;
+  const pk=W/($('#photo').clientWidth||W),k=Math.max(W,800)/900,b=14*k;
   const showLbl=$('#optLbl').checked;
   const has=$('#optCap').checked&&(val('title')||metaText()||val('event')||val('notes')||S.people.length);
   const cv=document.createElement('canvas'),ctx=cv.getContext('2d');
   let capH=0;
-  if(has){cv.width=W;cv.height=10;capH=Math.ceil(caption(ctx,W,k,0,true))}
+  if(has){cv.width=W;cv.height=10;capH=Math.ceil(caption(ctx,W,k,0,true)+b)}
   cv.width=W;cv.height=H+capH;
   ctx.drawImage(im,0,0,W,H);
   S.people.forEach((p,i)=>{
     const x=p.x*W,y=p.y*H,r=13*pk;
-    ctx.beginPath();ctx.arc(x,y,r-pk,0,7);ctx.fillStyle='#ffc83d';ctx.fill();
-    ctx.lineWidth=2*pk;ctx.strokeStyle='#fff';ctx.stroke();
-    ctx.fillStyle='#1d1a10';ctx.font='700 '+13*pk+'px '+SANS;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(String(i+1),x,y+pk*.5);
+    ctx.beginPath();ctx.arc(x,y,r-pk,0,7);ctx.fillStyle=YEL;ctx.fill();
+    ctx.lineWidth=2*pk;ctx.strokeStyle=INK;ctx.stroke();
+    ctx.fillStyle=INK;ctx.font='800 '+13*pk+'px '+FONT;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(String(i+1),x,y+pk*.5);
     const t=p.name.trim();
     if(showLbl&&t){
-      const f=12*pk;ctx.font='600 '+f+'px '+SANS;
-      const w=ctx.measureText(t).width+14*pk,h=f+5*pk;
-      const bx=Math.min(Math.max(x-w/2,2),W-w-2),by=Math.min(y+r+3*pk,H-h-2);
-      ctx.fillStyle='rgba(15,12,8,.78)';rr(ctx,bx,by,w,h,h/2);ctx.fill();
-      ctx.fillStyle='#fff';ctx.fillText(t,bx+w/2,by+h/2+pk*.5);
+      const f=12*pk;ctx.font='700 '+f+'px '+FONT;
+      const w=ctx.measureText(t).width+16*pk,h=f+5*pk;
+      const bx=Math.min(Math.max(x-w/2,2),W-w-2),by=Math.min(y+r+4*pk,H-h-2);
+      ctx.fillStyle='#fff';rr(ctx,bx,by,w,h,h/2);ctx.fill();ctx.lineWidth=1.5*pk;ctx.strokeStyle=INK;ctx.stroke();
+      ctx.fillStyle=INK;ctx.fillText(t,bx+w/2,by+h/2+pk*.5);
     }
   });
-  if(has){ctx.fillStyle='#f4f5f1';ctx.fillRect(0,H,W,capH);caption(ctx,W,k,H,false)}
+  if(has){
+    ctx.fillStyle='#fff';ctx.fillRect(0,H,W,capH);
+    ctx.save();ctx.beginPath();ctx.rect(0,H,W,b);ctx.clip();
+    ctx.fillStyle=ORA;ctx.fillRect(0,H,W,b);ctx.fillStyle=INK;
+    for(let x=-b;x<W+b;x+=2*b){ctx.beginPath();ctx.moveTo(x,H+b);ctx.lineTo(x+b,H+b);ctx.lineTo(x+2*b,H);ctx.lineTo(x+b,H);ctx.closePath();ctx.fill()}
+    ctx.restore();
+    ctx.fillStyle=INK;ctx.fillRect(0,H,W,Math.max(2,2*pk));
+    caption(ctx,W,k,H+b,false);
+  }
   return cv;
 }
 async function exportImg(){
   if(!S.img)return;
   const jpg=$('#fmt').value==='jpg';
   status('Préparation de l’image…');
+  try{await Promise.all(['800','700','600','400'].map(w=>document.fonts.load(w+' 20px "Bricolage Grotesque"')))}catch(e){}
   let blob;
   try{blob=await new Promise(r=>render().toBlob(r,jpg?'image/jpeg':'image/png',.92))}catch(e){blob=null}
   if(!blob){status('Export impossible : la photo est peut-être trop grande. Essayez le format JPEG.');return}
